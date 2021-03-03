@@ -1,14 +1,10 @@
-#include <QApplication>
-#include "MainWindow.h"
+#include "cubemorphing.h"
+#include <QtWidgets/QApplication>
 
-int main(int argc, char** argv)
+int main(int argc, char *argv[])
 {
-	QApplication app(argc, argv);
-	ShaderParser parser{ "Resources/vshader.glsl", "Resources/fshader.glsl" };
-
-	MainWindow window{parser };
-	window.setFixedSize(1200, 600);
-	window.show();
-	
-	return app.exec();
+    QApplication a(argc, argv);
+    CubeMorphing w;
+    w.show();
+    return a.exec();
 }
