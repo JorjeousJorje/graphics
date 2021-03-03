@@ -19,7 +19,7 @@ GLMeshRenderer::GLMeshRenderer()
 void GLMeshRenderer::init_renderer(GLMesh* mesh, const std::string& vertex, const std::string& fragment)
 {
 	initializeOpenGLFunctions();
-	
+
 	mesh_ = mesh;
 	init_shaders(vertex, fragment);
 

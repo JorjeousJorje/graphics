@@ -12,6 +12,5 @@ public:
 
 	
 	std::vector<GLVertex> vertices{};
-	//std::vector<QVector3D> colors{};
 	std::vector<unsigned> indices{};
 };

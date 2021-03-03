@@ -4,7 +4,6 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLFunctions_3_0>
 #include "GLMesh.h"
-#include "GLTransformation.h"
 #include <QOffscreenSurface>
 
 
