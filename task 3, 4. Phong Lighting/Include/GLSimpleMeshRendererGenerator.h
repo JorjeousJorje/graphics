@@ -5,5 +5,5 @@
 class GLSimpleMeshRendererGenerator : public GLMeshRendererGenerator
 {
 public:
-	std::shared_ptr<GLMeshRenderer> get_renderer(GLMesh& mesh, GLTransform& transform, GLMaterial& material) override;
+	std::shared_ptr<GLMeshRenderer> get_renderer(GLMesh&, GLTransform&, GLMaterial&) override;
 };

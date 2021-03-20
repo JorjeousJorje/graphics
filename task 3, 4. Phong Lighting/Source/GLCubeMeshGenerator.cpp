@@ -2,13 +2,13 @@
 #include "GLCubeMeshGenerator.h"
 #include "QMatrix4x4"
 
-GLCubeMeshGenerator::GLCubeMeshGenerator(const float edge_len)
-	: face_generator_{ edge_len }
+GLCubeMeshGenerator::GLCubeMeshGenerator(const float edge_len, const unsigned steps_count)
+	: face_generator_{ edge_len, steps_count }
 {
 }
-GLMesh GLCubeMeshGenerator::generate(const unsigned mesh_steps, const QColor& color) const
+GLMesh GLCubeMeshGenerator::generate(const QColor& color) const
 {
-	auto front_face = face_generator_.generate(mesh_steps, color);
+	auto front_face = face_generator_.generate(color);
 	auto cube_vertices = front_face.vertices;
 
 	QMatrix4x4 rotation;
@@ -31,10 +31,6 @@ GLMesh GLCubeMeshGenerator::generate(const unsigned mesh_steps, const QColor& co
 	return { cube_vertices, cube_indices };
 }
 
-GLMesh GLCubeMeshGenerator::generate() const
-{
-	return GLMesh{};
-}
 
 void GLCubeMeshGenerator::rotate_face(std::vector<GLVertex>& plane_vertices, const QMatrix4x4& matrix) const
 {
@@ -42,6 +38,10 @@ void GLCubeMeshGenerator::rotate_face(std::vector<GLVertex>& plane_vertices, con
 	{
 		vertex.coordinate = matrix * vertex.coordinate;
 		vertex.normal = matrix * vertex.normal;
+		// ?
+		vertex.tangent = matrix * vertex.tangent;
+		vertex.bitangent = matrix * vertex.bitangent;
+		
 	});
 }
 
@@ -72,4 +72,12 @@ void GLCubeMeshGenerator::get_top_n_bottom(std::vector<GLVertex>& plane_vertices
 		rotate_face(plane_vertices, matrix);
 		std::copy(plane_vertices.begin(), plane_vertices.end(), std::back_inserter(cube_vertices));
 	}
+}
+
+void GLCubeMeshGenerator::init_indices(std::vector<unsigned>& indices) const
+{
+}
+
+void GLCubeMeshGenerator::init_vertices(std::vector<GLVertex>& vertices, const QColor& color) const
+{
 }

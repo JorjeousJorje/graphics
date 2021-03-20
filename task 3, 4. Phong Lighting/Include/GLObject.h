@@ -3,6 +3,7 @@
 #include "GLMaterial.h"
 #include "GLMeshRenderer.h"
 #include "GLTransform.h"
+#include "GLTexture.h"
 
 
 class GLObject

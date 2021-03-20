@@ -70,13 +70,25 @@ void GLMeshRenderer::enable_attributes() const
 
 	shader_program_->enableAttributeArray("colAttr");
 	shader_program_->setAttributeBuffer("colAttr", GL_FLOAT, offsetof(GLVertex, color), 3, sizeof(GLVertex));
+
+	shader_program_->enableAttributeArray("textureAttr");
+	shader_program_->setAttributeBuffer("textureAttr", GL_FLOAT, offsetof(GLVertex, texture), 2, sizeof(GLVertex));
+	
+	shader_program_->enableAttributeArray("tangentAttr");
+	shader_program_->setAttributeBuffer("aTangent", GL_FLOAT, offsetof(GLVertex, tangent), 3, sizeof(GLVertex));
+	
+	shader_program_->enableAttributeArray("bitangentAttr");
+	shader_program_->setAttributeBuffer("aBitangent", GL_FLOAT, offsetof(GLVertex, bitangent), 3, sizeof(GLVertex));
 }
 
 void GLMeshRenderer::disable_attributes() const
 {
 	shader_program_->disableAttributeArray("posAttr");
 	shader_program_->disableAttributeArray("normalAttr");
+	shader_program_->disableAttributeArray("textureAttr");
 	shader_program_->disableAttributeArray("colAttr");
+	shader_program_->disableAttributeArray("tangentAttr");
+	shader_program_->disableAttributeArray("bitangentAttr");
 }
 
 

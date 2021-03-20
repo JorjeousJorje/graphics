@@ -1,6 +1,17 @@
 #include "GLCamera.h"
 
-GLCamera::GLCamera()
+GLCamera::GLCamera(const QVector3D& pos, float _aspect_ratio)
+	:	position	{ pos },
+		front		{ 0, 0, -1 },
+		right		{ 1, 0, 0 },
+		up			{ 0, 1, 0 },
+		world_up	{ 0, 1, 0 },
+
+		fov			{ 60.f },
+		yaw			{ -90.0f },
+		pitch		{ 0.0f },
+		aspect_ratio{ _aspect_ratio },
+		zoom		{ 45.f }	
 {
 	update_camera_vectors();
 }
@@ -8,7 +19,7 @@ GLCamera::GLCamera()
 QMatrix4x4 GLCamera::get_projection_matrix() const
 {
 	QMatrix4x4 projection;
-	projection.perspective(FOV, aspectRatio, 0.1f, 1000.0f);
+	projection.perspective(zoom, aspect_ratio, 0.1f, 1000.0f);
 	return projection;
 }
 
@@ -28,7 +39,7 @@ void GLCamera::update_camera_vectors()
 	forward.setZ(sin(qDegreesToRadians(yaw)) * cos(qDegreesToRadians(pitch)));
 	front = forward.normalized();
 
-	right = QVector3D::crossProduct(forward, QVector3D(0, 1, 0)).normalized();
+	right = QVector3D::crossProduct(front, world_up).normalized();
 	up = QVector3D::crossProduct(right, front).normalized();
 }
 
