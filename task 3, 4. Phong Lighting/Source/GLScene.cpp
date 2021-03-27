@@ -1,17 +1,14 @@
 #include "GLScene.h"
 #include "GLDirectedLight.h"
 #include "MeshGeneratorCollecrion.h"
-#include "GLMeshGenerator.h"
 #include "ShaderCollection.h"
-#include "GLTextureLoader.h"
 
 obj_sptr GLScene::create_object(ShaderData& data, const mesh_gen_sptr& mesh_generator, const QVector3D& pos, const QColor& color, const GLMaterial& material) const
 {
 	auto object = std::make_shared<GLObject>();
-	object->mesh = mesh_generator->generate(color);
+	object->mesh = mesh_generator->generate(initial_grid_step, color);
 	object->transform.translate(pos);
 	object->material = material;
-	object->material.texture = GLTextureLoader::load_texture("Textures\\Wow2.jpg");
 	object->renderer = data.renderer_generator->get_renderer(object->mesh, object->transform, object->material);
 	object->init_renderer(data.get_shader_program());
 	

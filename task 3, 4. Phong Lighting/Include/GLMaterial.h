@@ -1,12 +1,10 @@
 #pragma once
 #include <QColor>
 #include <QOpenGLShaderProgram>
-#include "GLTexture.h"
 
 
 struct GLMaterial
 {
-	GLTexture texture;
 	bool is_light_source = false;
 	QColor ambient;
 	QColor diffuse;

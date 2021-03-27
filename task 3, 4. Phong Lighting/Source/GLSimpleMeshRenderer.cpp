@@ -16,16 +16,10 @@ void GLSimpleMeshRenderer::render(const GLCamera& camera, const std::map<light_s
 		upload_lights_details(lights);
 		material_.upload_to_shader(shader_program_);
 	}
-	
-	glActiveTexture(GL_TEXTURE0);
-	material_.texture.texture_data->bind();
-	// glActiveTexture(GL_TEXTURE1);
-	// material_.texture.normal_map_data->bind();
-	
+
 	vao_.bind();
 	glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mesh_.indices.size()), GL_UNSIGNED_INT, nullptr);
 	vao_.release();
-	
 }
 
 void GLSimpleMeshRenderer::upload_lights_details(const std::map<light_sptr, obj_sptr>& lights) const

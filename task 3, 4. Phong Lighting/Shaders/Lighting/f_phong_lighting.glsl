@@ -48,13 +48,9 @@ uniform highp mat4 view;
 uniform highp mat4 projection;
 
 uniform vec3 cameraPos;
-uniform sampler2D ourTexture;
-uniform sampler2D normalMap;
 
 in vec3 Normal;
 in vec3 FragPos;
-in vec2 TexCoords;
-in mat3 TBN;
 
 float attenuation(float dist)
 {
@@ -149,7 +145,6 @@ void main()
         gl_FragColor = vec4(1, 0.682, 0, 1.0f);
     } else {
         vec3 PhongColor = calculate_lighting();
-        // gl_FragColor = vec4(PhongColor, 1.0f);
-        gl_FragColor = vec4(texture(ourTexture, TexCoords).rgb, 1.f) * vec4(PhongColor, 1.0f);
+        gl_FragColor = vec4(PhongColor, 1.0f);
     }
 }

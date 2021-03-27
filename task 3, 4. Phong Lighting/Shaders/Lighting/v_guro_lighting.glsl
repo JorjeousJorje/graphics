@@ -47,14 +47,10 @@ uniform vec3 cameraPos;
 in vec3 posAttr;
 in vec4 colAttr;
 in vec3 normalAttr;
-in vec2 textureAttr;
-in vec3 tangentAttr;
-in vec3 bitangentAttr; 
 
 out vec3 FragPos;
 out vec3 Normal;
 out vec3 PhongColor;
-out vec2 TexCoords;
 
 float attenuation(float dist)
 {
@@ -145,7 +141,6 @@ void main()
 {
     FragPos = vec3(model * vec4(posAttr, 1.0));
     Normal = mat3(normal_matrix) * normalAttr;
-    TexCoords = textureAttr;
 
     PhongColor = calculate_lighting();
     gl_Position = projection * view * model * vec4(posAttr, 1.0);

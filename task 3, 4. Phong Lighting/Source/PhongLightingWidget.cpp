@@ -48,13 +48,7 @@ void PhongLightingWidget::set_specular_color(const QColor& color)
         });
 }
 
-void PhongLightingWidget::set_shininess(const int shininess)
-{
-    std::for_each(current_scene_.objects.begin(), current_scene_.objects.end(), [&](std::shared_ptr<GLObject>& object)
-        {
-            object->material.shininess = static_cast<float>(shininess);
-        });
-}
+
 
 void PhongLightingWidget::set_render_mode(const int state)
 {
@@ -160,76 +154,9 @@ void PhongLightingWidget::keyPressEvent(QKeyEvent* event)
     }
 }
 
-
-
-
-
-void PhongLightingWidget::mouseMoveEvent(QMouseEvent* event)
-{
-    if (!event->screenPos().isNull() && current_scene_.camera_mover.activated) {
-        current_scene_.camera_mover.set_mouse_pos(event->screenPos());
-    }
-}
-
-void PhongLightingWidget::mousePressEvent(QMouseEvent* event)
-{
-	if(event->button() == Qt::LeftButton) {
-        current_scene_.camera_mover.activated = true;
-        current_scene_.camera_mover.set_mouse_pos(event->screenPos());
-	}
-}
-
-void PhongLightingWidget::mouseReleaseEvent(QMouseEvent* event)
-{
-    if (event->button() == Qt::LeftButton) {
-        current_scene_.camera_mover.activated = false;
-    }
-}
-
-
-void PhongLightingWidget::wheelEvent(QWheelEvent* event)
-{
-    QPoint num_degrees = event->angleDelta() / 8;
-
-    if (!num_degrees.isNull()) {
-        QPoint num_steps = num_degrees / 15;
-        current_scene_.camera_mover.update_camera_zoom(num_steps.y());
-    }
-
-    event->accept();
-}
-
-
-
-
 void PhongLightingWidget::keyReleaseEvent(QKeyEvent* event)
 {
     current_scene_.camera_mover.reset_key(event->key());
-}
-
-void PhongLightingWidget::show_shininess_dialog()
-{
-    lighting_dialog_.show();
-}
-
-void PhongLightingWidget::show_light_color_dialog()
-{
-    light_color_dialog_.show();
-}
-
-void PhongLightingWidget::show_ambient_color_dialog()
-{
-    ambient_color_dialog_.show();
-}
-
-void PhongLightingWidget::show_diffuse_color_dialog()
-{
-    diffuse_color_dialog_.show();
-}
-
-void PhongLightingWidget::show_specular_color_dialog()
-{
-    specular_color_dialog_.show();
 }
 
 void PhongLightingWidget::initializeGL()
