@@ -28,7 +28,7 @@ public:
 			   "Shaders\\Lighting\\f_guro_lighting_wo_normal_mapping.glsl", std::make_shared<GLSimpleMeshRendererGenerator>()} },
 
 		{ {"morphing"},
-				{"Shaders\\Lighting\\v_morphing.glsl",
-			   "Shaders\\Lighting\\f_morphing.glsl", std::make_shared<GLSimpleMeshRendererGenerator>()} }
+				{"Shaders\\v_morphing.glsl",
+			   "Shaders\\f_morphing.glsl", std::make_shared<GLSimpleMeshRendererGenerator>()} }
 	};
 };

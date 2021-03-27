@@ -57,6 +57,11 @@ void PhongLightingWidget::set_shininess(const int shininess)
         });
 }
 
+void PhongLightingWidget::set_morph_factor(const int morph_factor)
+{
+    morph_factor_ = static_cast<float>(morph_factor) / 100.f;
+}
+
 void PhongLightingWidget::set_render_mode(const int state)
 {
 	auto* obj = sender();
@@ -101,7 +106,8 @@ void PhongLightingWidget::catch_fps(const QString& fps)
 PhongLightingWidget::PhongLightingWidget(QWidget* parent)
 	:   QOpenGLWidget{ parent },
 		render_dialog_{*this },
-		lighting_dialog_{*this}
+		lighting_dialog_{*this},
+		morphing_dialog_{ *this }
 {
 	setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);
@@ -124,11 +130,18 @@ void PhongLightingWidget::keyPressEvent(QKeyEvent* event)
     if (event->key() == Qt::Key_1) {
         makeCurrent();
         ++scene_count_;
+
+    	
+    	if(scene_count_ == prep_scenes_.scenes.size() - 1) {
+            is_morphing_ = true;
+    	}
+    	
         lighting_dialog_.reset_state();
         const auto current_scene = std::next(prep_scenes_.scenes.begin(), scene_count_);
     	if(current_scene == prep_scenes_.scenes.end()) {
             scene_count_ = 0;
             current_scene_ = *prep_scenes_.scenes.begin();
+            is_morphing_ = false;
     	} else {
             current_scene_ = *current_scene;
     	}
@@ -207,6 +220,11 @@ void PhongLightingWidget::show_specular_color_dialog()
     specular_color_dialog_.show();
 }
 
+void PhongLightingWidget::show_morphing_widget()
+{
+    morphing_dialog_.show();
+}
+
 void PhongLightingWidget::initializeGL()
 {
 
@@ -226,6 +244,9 @@ void PhongLightingWidget::paintGL()
     std::for_each(current_scene_.objects.begin(), current_scene_.objects.end(), [&](std::shared_ptr<GLObject>& object)
         {
             object->transform.rotate(100.f / 600.f, { 0, 0, -1});
+    		if(is_morphing_) {
+                object->renderer->shader_program_->setUniformValue("morphFactor", morph_factor_);
+    		}
         });
 	
     renderer_.render(current_scene_);

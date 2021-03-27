@@ -10,6 +10,7 @@
 #include "PreparedScenes.h"
 #include "GLSceneRenderer.h"
 #include "LightingDialog.h"
+#include "MorphingDialog.h"
 
 
 class PhongLightingWidget final : public QOpenGLWidget
@@ -33,6 +34,7 @@ public slots:
 	void show_ambient_color_dialog();
 	void show_diffuse_color_dialog();
 	void show_specular_color_dialog();
+	void show_morphing_widget();
 	
 	void set_render_mode(int state);
 	void catch_fps(const QString&);
@@ -42,7 +44,9 @@ public slots:
 	void set_ambient_color(const QColor& color);
 	void set_diffuse_color(const QColor& color);
 	void set_specular_color(const QColor& color);
+	
 	void set_shininess(int shininess);
+	void set_morph_factor(int morph_factor);
 
 signals:
 	void send_fps(const QString&);
@@ -58,9 +62,9 @@ protected:
 public:
 	PreparedScenes prep_scenes_;
 	
-	int scene_count_{ 0 };
-	bool is_phong_{ true };
+	std::size_t scene_count_{ 0 };
 	bool is_morphing_{ false };
+	float morph_factor_{ 0.0 };
 
 	
 	GLScene current_scene_;
@@ -69,6 +73,7 @@ public:
 	RenderDialog render_dialog_;
 
 	LightingDialog lighting_dialog_;
+	MorphingDialog morphing_dialog_;
 	QColorDialog light_color_dialog_;
 	QColorDialog ambient_color_dialog_;
 	QColorDialog diffuse_color_dialog_;

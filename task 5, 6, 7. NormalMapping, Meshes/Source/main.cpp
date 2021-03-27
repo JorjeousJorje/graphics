@@ -4,6 +4,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+	
     QSurfaceFormat format;
     format.setSamples(16);
     format.setVersion(2, 1);
